@@ -30,6 +30,7 @@ class check_brackets {
         InputStreamReader input_stream = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input_stream);
         String text = reader.readLine();
+        String response = "Success";
 
         Stack<Bracket> opening_brackets_stack = new Stack<Bracket>();
         for (int position = 0; position < text.length(); ++position) {
@@ -37,13 +38,24 @@ class check_brackets {
 
             if (next == '(' || next == '[' || next == '{') {
                 // Process opening bracket, write your code here
+            	Bracket bracket = new Bracket(next, position);
+            	opening_brackets_stack.push(bracket);
             }
 
             if (next == ')' || next == ']' || next == '}') {
                 // Process closing bracket, write your code here
+            	if(opening_brackets_stack.isEmpty()){
+            		response = String.valueOf(position + 1);
+            		break;
+            	}
+            	Bracket bracket = opening_brackets_stack.pop();
+            	if(!bracket.Match(next)){
+            		response = String.valueOf(position + 1);
+            		break;
+            	}
             }
         }
 
-        // Printing answer, write your code here
+        System.out.println(response);
     }
 }
